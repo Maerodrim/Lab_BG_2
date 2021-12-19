@@ -41,7 +41,7 @@ object Main {
 
     import spark.implicits._
 
-    val years = (2010 to 2020).map(x => x.toString)
+    val years = (2010 to 2021).map(x => x.toString)
 
     val topCount = 10
 
@@ -57,8 +57,8 @@ object Main {
       .collect()
 
 
-    val postsRDD = sc.textFile("K://BIGData//big_data-master//data/posts_sample.xml", 100)
-    //val postsRDD = sc.textFile(hadoopRoot+"posts_sample.xml")
+    //val postsRDD = sc.textFile("K://BIGData/Posts.xml", 100)
+    val postsRDD = sc.textFile(hadoopRoot+"posts_sample.xml")
     val posts_count = postsRDD.count
     val posts_raw = postsRDD.zipWithIndex.filter { case (s, idx) => idx > 2 && idx < posts_count - 1 }.map(_._1)
     val posts_xml = posts_raw.map(row => scala.xml.XML.loadString(row))
